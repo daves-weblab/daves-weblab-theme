@@ -2,6 +2,8 @@
 
 class DWL_Loader {
     private $_loaded_config_domains = array();
+    private $_loaded_lang_files = array();
+
     private $_cached_variables = array();
 
     public function config($domain) {
@@ -44,8 +46,20 @@ class DWL_Loader {
         return true;
     }
 
-    public function lang($file) {
+    public function lang($lang) {
+        $file = APPPATH . 'configs' . DS . $lang;
 
+        if(file_exists($file) && !in_array($lang, $this->_loaded_lang_files)) {
+            $this->_loaded_lang_files[] = $lang;
+            $lang = array();
+
+            include($file);
+
+            $_DWL =& get_instance();
+            $_DWL->language->add($lang);
+        }
+
+        return false;
     }
 
     public function helper($helper) {

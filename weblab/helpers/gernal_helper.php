@@ -11,3 +11,11 @@ function assets_url() {
 function &get_instance() {
     return DWL::getInstance();
 }
+
+function L($line) {
+    return DWL::getInstance()->language->line($line);
+}
+
+function _L($line) {
+    echo L($line);
+}
