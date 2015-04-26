@@ -9,7 +9,7 @@ class DWL_Loader
 
     public function config($domain)
     {
-        $file = APPPATH . 'configs' . DS . $domain;
+        $file = APPPATH . 'configs' . DS . $domain . EXT;
 
         if (file_exists($file) && !in_array($domain, $this->_loaded_config_domains)) {
             $this->_loaded_config_domains[] = $domain;
