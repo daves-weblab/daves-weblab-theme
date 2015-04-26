@@ -3,20 +3,25 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('EXT', '.php');
 
-define('FCPATH', direname(dirname(__FILE__)) . DS);
+define('FCPATH', dirname(dirname(__FILE__)) . DS);
 define('APPPATH', FCPATH . 'application' . DS);
-define('SYSPATH', FCPATH . 'weblab'. DS);
+define('SYSPATH', FCPATH . 'weblab' . DS);
 
-include(SYSPATH . 'weblab' . EXT);
+require_once(SYSPATH . 'classes' . DS . 'DWL' . EXT);
 
-$weblab =& get_instance();
+$_DWL =& DWL::getInstance();
 
-$weblab->loadSystemClass('config');
-$weblab->loadSystemClass('input');
-$weblab->loadSystemClass('loader');
-$weblab->loadSystemClass('language');
+$_DWL->loadSystemClass('config', 'config');
+$_DWL->loadSystemClass('input', 'input');
+$_DWL->loadSystemClass('loader', 'load');
+$_DWL->loadSystemClass('language', 'lang');
+$_DWL->loadSystemClass('weblab', 'weblab');
+$_DWL->loadSystemClass('template', 'tpl');
 
-$weblab->load->helper('general');
+$_DWL->load->helper('general');
+$_DWL->load->config('config');
+
+$_DWL->load->variable('_DWL', $_DWL);
 
 /**
  *
@@ -24,20 +29,22 @@ $weblab->load->helper('general');
  * directory
  *
  */
-function autoload_custom_classes($class) {
+function dwl_autoload_custom_classes($class)
+{
     $dir = APPPATH . 'classes';
-    autoload_custom_classes_rek(strtolower($class), $dir);
+    dwl_autoload_custom_classes_rek(strtolower($class), $dir);
 }
 
-function autoload_custom_classes_rek($class, $dir) {
-    foreach(new DirectoryIterator($dir) as $file) {
-        if($file->isDot()) continue;
+function dwl_autoload_custom_classes_rek($class, $dir)
+{
+    foreach (new DirectoryIterator($dir) as $file) {
+        if ($file->isDot()) continue;
 
-        if($file->isDir()) {
-            if(autoload_custom_classes_rek($class, $file->getPathname())) return TRUE;
-        } else if($file->isFile()) {
+        if ($file->isDir()) {
+            if (dwl_autoload_custom_classes_rek($class, $file->getPathname())) return TRUE;
+        } else if ($file->isFile()) {
             $search = strtolower($file->getFilename());
-            if(preg_match('/' . $class . '\.(class)?\.?php/', $search)) {
+            if (preg_match('/' . $class . '\.(class)?\.?php/', $search)) {
                 include_once($file->getPathname());
                 return TRUE;
             }
@@ -47,4 +54,4 @@ function autoload_custom_classes_rek($class, $dir) {
     return FALSE;
 }
 
-spl_autoload_register('autoload_custom_classes');
+spl_autoload_register('dwl_autoload_custom_classes');

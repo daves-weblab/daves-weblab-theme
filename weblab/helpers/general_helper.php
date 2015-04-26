@@ -5,15 +5,16 @@ function base_url() {
 }
 
 function assets_url() {
-
+    return base_url() . DWL::getInstance()->config->item('assets_url', 'config') . '/';
 }
 
-function &get_instance() {
+function &get_instance()
+{
     return DWL::getInstance();
 }
 
 function L($line) {
-    return DWL::getInstance()->language->line($line);
+    return DWL::getInstance()->lang->line($line);
 }
 
 function _L($line) {
