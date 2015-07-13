@@ -2,6 +2,7 @@
 
 get_header();
 
-$_DWL->tpl->view('test');
+// register assets here (js, css, etc.)
+// custom logic here
 
 get_footer();
