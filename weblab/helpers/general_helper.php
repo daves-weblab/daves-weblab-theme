@@ -14,9 +14,22 @@ function &get_instance()
 }
 
 function L($line) {
-    return DWL::getInstance()->lang->line($line);
+    $args = null;
+    if(func_num_args() > 1) {
+        $args = func_get_args();
+        unset($args[0]);
+    }
+
+    return DWL::getInstance()->lang->line($line, $args);
 }
 
 function _L($line) {
-    echo L($line);
+    $args = null;
+    if(func_num_args() > 1) {
+        $args = func_get_args();
+        unset($args[0]);
+        $args = array_merge($args);
+    }
+
+    echo DWL::getInstance()->lang->line($line, $args);
 }

@@ -6,16 +6,20 @@ class DWL_Language
     private $_current_lang;
 
     public function __construct() {
-        $this->_current_lang = substr(get_locale(), 0, 2);
+        $this->_current_lang = 'en';//substr(get_locale(), 0, 2);
     }
 
-    public function line($line)
+    public function line($line, $args=null)
     {
         if ($line && array_key_exists($line, $this->_lang)) {
-            return $this->_lang[$line];
+            $line = $this->_lang[$line];
         }
 
-        return $line;
+        if($args === null) {
+            return $line;
+        } else {
+            return vsprintf($line, $args);
+        }
     }
 
     public function add($lang)
