@@ -63,6 +63,14 @@ class DWL_Loader
         return true;
     }
 
+    public function fetch($key) {
+        if(array_key_exists($key, $this->_cached_variables)) {
+            return $this->_cached_variables[$key];
+        }
+
+        return null;
+    }
+
     public function lang($lang)
     {
         $_DWL =& get_instance();
@@ -131,5 +139,9 @@ class DWL_Loader
     public function __get($var)
     {
         return get_instance()->{$var};
+    }
+
+    public function __call($name, $arguments) {
+        call_user_func_array(array(get_instance(), $name), $arguments);
     }
 }

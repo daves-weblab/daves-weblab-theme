@@ -7,12 +7,12 @@
 
     <title><?php wp_title() ?></title>
 
-    <link rel="icon" type="image/png" href="<?php echo assets_url() ?>img/favicon.png">
-    <link rel="icon" type="image/vnd.microsoft.icon" href="<?php echo assets_url() ?>img/favicon.ico">
-
     <?php wp_head() ?>
+
+    <?php $this->head() ?>
 </head>
-<body class="<?= $_DWL->weblab->body_class() ?>">
+
+<body>
 <!-- Page Content -->
 <!-- ------------ -->
 

@@ -6,6 +6,6 @@
 $_DWL = get_instance();
 $_DWL->tpl->view('templates/boilerplate');
 
-// any Weblab-specific code?
+// any weblab-specific code?
 // here is the place to put it if you don't want to use
 // functions.php for it

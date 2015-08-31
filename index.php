@@ -2,7 +2,7 @@
 
 get_header();
 
-// register assets here (js, css, etc.)
-// custom logic here
+// custom logic
+// $_DWL holds instance to the weblab singleton after get_header()
 
 get_footer();
